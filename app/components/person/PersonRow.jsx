@@ -29,13 +29,14 @@ class PersonRow extends React.Component {
 
 
         Object.keys(person).map(key => {
-                if(key !== 'name'){
+                if((key !== 'name') && PersonActions.checkRole(PersonActions.getRoles(), key)){
                     let icon
                     if(person[key]){
                         icon = <Col md={2}><i className="mdi-action-done"></i></Col>
                     } else {
                         icon = <Col md={2}><i className="mdi-content-clear"></i></Col>
                     }
+
                     icons.push(
                         icon
                     )

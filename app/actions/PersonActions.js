@@ -51,6 +51,10 @@ class PersonActions {
         }
         this.actions.filterApplied(filterKey)
     }
+    checkRole(roles,key){
+        console.log(roles.filter(i => (i.key == key)).length > 0, key, "HERE!!")
+        return (roles.filter(i => (i.key == key)).length > 0)
+    }
 }
 
 export default alt.createActions(PersonActions);

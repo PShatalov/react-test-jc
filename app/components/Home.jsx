@@ -136,7 +136,7 @@ class Home extends React.Component {
                         <h2>{'Total Persons: '+this.state.persons.length}</h2>
                         {
                             this.state.roles.map(role => (
-                                <h4>{role.title+' '+PersonActions.getTypeCount(this.state.persons, role.key)}</h4>
+                                <h4>{role.title+': '+PersonActions.getTypeCount(this.state.persons, role.key)}</h4>
                             ))
                         }
                     </Panel>
