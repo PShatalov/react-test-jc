@@ -1,7 +1,8 @@
 import React from 'react';
-import {Input, Row, Col} from 'react-bootstrap'
+import {Input, Row, Col, Button, Panel} from 'react-bootstrap'
 import Checkbox from '../common/Checkbox.jsx'
 import PersonActions from '../../actions/PersonActions.js'
+import PersonRow from './PersonRow.jsx'
 
 class PersonTable extends React.Component {
     constructor(...v){
@@ -9,40 +10,25 @@ class PersonTable extends React.Component {
         this.state = {
             roles: PersonActions.getRoles()
         }
-
     }
     render() {
-        console.log(this.state.roles)
-        //this.props.persons.map((person, index) => (
-        //    Object.keys(person).map(key => (
-        //        console.log(key !== 'name'))
-        //    ) )
-        //)
-
+        let panelHeader = <Row style={{padding: '10px'}}>
+            <Col md={2}>Name</Col>
+            {
+                this.state.roles.map(role => (
+                    <Col md={2}>{role.title}</Col>
+                ))
+            }
+            <Col md={2}>Delete</Col>
+        </Row>
         return (
-            <div>
-                <Row>
-                    <Col md={2}>Name</Col>
-                    {
-                        this.state.roles.map(role => (
-                            <Col md={2}>{role.title}</Col>
-                        ))
-                    }
-                    <Col md={2}>Delete</Col>
-                </Row>
+            <Panel bsStyle={'primary'} header={panelHeader}>
                 {
                     this.props.persons.map((person, index) => (
-                        <Row>
-                        {Object.keys(person).map(key => (
-                            <Col md={2}>
-                                {(key !== 'name') ? <Checkbox defaultChecked={person[key]} /> : person[key]}
-                            </Col>
-                        ))}
-                            <Col md={2}><i onClick={() => this.props.removePerson(index)} style={{cursor: 'pointer'}} className="mdi-action-delete"></i></Col>
-                        </Row>
+                        <PersonRow index={index} {...this.props} person={person} />
                     ))
                 }
-            </div>
+            </Panel>
         );
     }
 }
