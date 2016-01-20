@@ -19,7 +19,7 @@ class PersonTable extends React.Component {
                     <Col md={2}>{role.title}</Col>
                 ))
             }
-            <Col md={2}>Delete</Col>
+            <Col md={3}>Delete</Col>
         </Row>
         return (
             <Panel bsStyle={'primary'} header={panelHeader}>
@@ -29,7 +29,7 @@ class PersonTable extends React.Component {
                     ))
                 }
                 <Row style={{padding: '10px'}}>
-                    <Col md={4}>
+                    <Col md={7}>
                         <FilterContainer roles={this.state.roles} />
                     </Col>
                 </Row>

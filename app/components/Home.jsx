@@ -96,6 +96,7 @@ class Home extends React.Component {
         //}
 
         return (
+            <div className="container">
             <Row>
                 <Col md={8}>
                     <Panel style={contentPanel}>
@@ -104,20 +105,20 @@ class Home extends React.Component {
                             <Col md={4}>
                                 <Input style={inputWidth} type="text" ref="name" />
                             </Col>
-                            <Col md={5}>
+                            <Col md={6}>
                                 <Row>
                                     {this.state.roles.map(role => (
-                                        <Col md={role.md} >
+                                        <Col md={role.md} style={{padding: '0'}}>
                                             <Checkbox key={role.key} label={role.title} ref={role.key} />
                                         </Col>
                                     ))}
                                 </Row>
                             </Col>
-                            <Col md={3}>
+                            <Col md={2}>
                                 <Button
                                     style={buttonMargin}
                                     onClick={this.addPerson}
-                                    className="btn btn-raised btn-primary"
+                                    className="btn-sm btn-raised btn-primary"
                                     placeholder="Person Name">
                                     {'Add'}
                                 </Button>
@@ -133,12 +134,15 @@ class Home extends React.Component {
                 <Col md={3}>
                     <Panel style={sidebarPanel}>
                         <h2>{'Total Persons: '+this.state.persons.length}</h2>
-                        <h4>{'Super Power: '+PersonActions.getTypeCount(this.state.persons, 'superpower')}</h4>
-                        <h4>{'Rich: '+PersonActions.getTypeCount(this.state.persons, 'rich')}</h4>
-                        <h4>{'Genius: '+PersonActions.getTypeCount(this.state.persons, 'genius')}</h4>
+                        {
+                            this.state.roles.map(role => (
+                                <h4>{role.title+' '+PersonActions.getTypeCount(this.state.persons, role.key)}</h4>
+                            ))
+                        }
                     </Panel>
                 </Col>
             </Row>
+            </div>
         );
     }
 }

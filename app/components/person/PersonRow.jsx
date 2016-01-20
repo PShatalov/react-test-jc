@@ -63,7 +63,7 @@ class PersonRow extends React.Component {
                       {this.props.person['name']}
                   </Col>
                   {checkboxes}
-                    <Col md={2}>
+                    <Col md={3}>
                         {
                             (this.state.showRemove)
                                 ? <Row>
