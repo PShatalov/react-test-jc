@@ -10,11 +10,41 @@ class Home extends React.Component {
         super(...v)
         this.state = {
             roles: PersonActions.getRoles(),
-            persons: (localStorage.getItem('persons') !== null) ? JSON.parse(localStorage.getItem('persons')) : []
+            persons: (localStorage.getItem('persons') !== null) ? JSON.parse(localStorage.getItem('persons')) : [],
+            appliedFilter:PersonStore.getState().appliedFilter
         }
 
         this.addPerson = this.addPerson.bind(this)
         this.removePerson = this.removePerson.bind(this)
+        this.storeChange = this.storeChange.bind(this)
+    }
+    componentDidMount() {
+        PersonStore.listen(this.storeChange);
+        //PersonStore.listen(this.onFilterComplete);
+    }
+
+    componentWillUnmount() {
+        PersonStore.unlisten(this.storeChange);
+    }
+    storeChange() {
+        let appliedfilter = PersonStore.getState().appliedFilter
+        //console.log(PersonStore.getState())
+        //let filtered = PersonActions.filteredPersons(this.state.persons, appliedfilter)
+        //console.log(filtered)
+        if(!appliedfilter){
+            this.refs[this.state.appliedFilter].setChecked(false)
+        } else {
+            if(this.state.appliedFilter){
+                this.refs[this.state.appliedFilter].setChecked(false)
+            }
+            this.refs[appliedfilter].setChecked(true)
+        }
+
+
+        this.setState({
+            appliedFilter: appliedfilter,
+            //persons:  filtered
+        })
     }
     addPerson(){
         let formData = {
@@ -36,13 +66,13 @@ class Home extends React.Component {
     removePerson(index){
 
         let persons = this.state.persons
-        console.log('here', persons)
+        //console.log('here', persons)
         persons.splice(index, 1)
         this.setState({
             persons: persons
         })
         PersonActions.addPerson(persons)
-        console.log(persons)
+        //console.log(persons)
     }
     render() {
         let contentPanel = {
@@ -59,6 +89,12 @@ class Home extends React.Component {
         let inputWidth = {
             width: '100%'
         }
+        //console.log(this.state.appliedFilter)
+        //if(this.state.appliedFilter){
+        //   let persons = PersonActions.filteredPersons(this.state.persons, this.state.appliedFilter)
+        //    console.log(persons)
+        //}
+
         return (
             <Row>
                 <Col md={8}>
@@ -89,7 +125,7 @@ class Home extends React.Component {
                         </Row>
                         {
                             (this.state.persons.length > 0)
-                                ? <PersonTable removePerson={this.removePerson} persons={this.state.persons} />
+                                ? <PersonTable removePerson={this.removePerson} filter={this.state.appliedFilter} persons={this.state.appliedFilter ? PersonActions.filteredPersons(this.state.persons, this.state.appliedFilter) : this.state.persons} />
                                 : null
                         }
                     </Panel>

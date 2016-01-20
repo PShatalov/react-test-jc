@@ -3,7 +3,7 @@ import {Input, Row, Col, Button, Panel} from 'react-bootstrap'
 import Checkbox from '../common/Checkbox.jsx'
 import PersonActions from '../../actions/PersonActions.js'
 import PersonRow from './PersonRow.jsx'
-
+import FilterContainer from '../filter/FilterContainer.jsx'
 class PersonTable extends React.Component {
     constructor(...v){
         super(...v)
@@ -28,6 +28,11 @@ class PersonTable extends React.Component {
                         <PersonRow index={index} {...this.props} person={person} />
                     ))
                 }
+                <Row style={{padding: '10px'}}>
+                    <Col md={4}>
+                        <FilterContainer roles={this.state.roles} />
+                    </Col>
+                </Row>
             </Panel>
         );
     }

@@ -10,12 +10,38 @@ class PersonRow extends React.Component {
             showRemove: false
         }
         this.changeShowRemove = this.changeShowRemove.bind(this)
+        this.removePerson = this.removePerson.bind(this)
+        this.renderCheckboxes = this.renderCheckboxes.bind(this)
 
+    }
+    removePerson(){
+        this.props.removePerson(this.props.index)
+        this.changeShowRemove(false)
     }
     changeShowRemove(display){
         this.setState({
             showRemove: display
         })
+    }
+    renderCheckboxes(){
+        let icons = []
+        let person = this.props.person
+
+
+        Object.keys(person).map(key => {
+                if(key !== 'name'){
+                    let icon
+                    if(person[key]){
+                        icon = <Col md={2}><i className="mdi-action-done"></i></Col>
+                    } else {
+                        icon = <Col md={2}><i className="mdi-content-clear"></i></Col>
+                    }
+                    icons.push(
+                        icon
+                    )
+                }
+        })
+        return icons
     }
     render() {
         let person = this.props.person
@@ -26,20 +52,23 @@ class PersonRow extends React.Component {
         let buttonMargin = {
             margin: '0'
         }
+        console.log(person)
+        let checkboxes = this.renderCheckboxes(true)
+
+        console.log(this.props.filter)
         return (
               <Panel style={panelStyle}>
               <Row>
-                  {Object.keys(person).map(key => (
-                    <Col md={2}>
-                        {(key !== 'name') ? <Checkbox defaultChecked={person[key]} /> : person[key]}
-                    </Col>
-                  ))}
+                  <Col md={2}>
+                      {this.props.person['name']}
+                  </Col>
+                  {checkboxes}
                     <Col md={2}>
                         {
                             (this.state.showRemove)
                                 ? <Row>
                                     <Col md={6}>
-                                        <Button style={buttonMargin} className="btn-sm btn-flat btn-info" onClick={() => this.props.removePerson(this.props.index)}>Confirm</Button>
+                                        <Button style={buttonMargin} className="btn-sm btn-flat btn-info" onClick={this.removePerson}>Confirm</Button>
                                     </Col>
                                     <Col md={6}>
                                         <Button style={buttonMargin} className="btn-sm btn-flat btn-info" onClick={() => this.changeShowRemove(false)}>Cancel</Button>

@@ -7,6 +7,9 @@ class Checkbox extends React.Component {
     getChecked() {
         return this.getInputDOMNode().checked;
     }
+    setChecked(checked){
+        this.getInputDOMNode().checked = checked;
+    }
     renderLabel(){
         var input = this.renderInput();
         return (
