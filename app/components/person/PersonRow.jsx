@@ -58,7 +58,7 @@ class PersonRow extends React.Component {
         return (
               <Panel style={panelStyle}>
               <Row>
-                  <Col md={2}>
+                  <Col md={3}>
                       {this.props.person['name']}
                   </Col>
                   {checkboxes}

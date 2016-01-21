@@ -114,7 +114,10 @@ class Home extends React.Component {
                         </Row>
                         {
                             (this.state.persons.length > 0)
-                                ? <PersonTable removePerson={this.removePerson} filter={this.state.appliedFilter} persons={this.state.appliedFilter ? PersonActions.filteredPersons(this.state.persons, this.state.appliedFilter) : this.state.persons} />
+                                ? <PersonTable
+                                    removePerson={this.removePerson}
+                                    filter={this.state.appliedFilter}
+                                    persons={this.state.appliedFilter ? PersonActions.filteredPersons(this.state.persons, this.state.appliedFilter) : this.state.persons} />
                                 : null
                         }
                     </Panel>

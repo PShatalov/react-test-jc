@@ -13,7 +13,7 @@ class PersonTable extends React.Component {
     }
     render() {
         let panelHeader = <Row style={{padding: '10px'}}>
-            <Col md={2}>Name</Col>
+            <Col md={3}>Name</Col>
             {
                 this.state.roles.map((role, index) => (
                     <Col key={role.title+index} md={2}>{role.title}</Col>
