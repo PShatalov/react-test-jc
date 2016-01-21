@@ -18,7 +18,7 @@ class FilterContainer extends React.Component {
         return (
             <Row>
                 {this.props.roles.map((role, index) => (
-                    <Filter role={role} />
+                    <Filter key={role.key+index} role={role} />
                 ))}
                 <Filter role={resetFilters} />
             </Row>

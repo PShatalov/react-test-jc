@@ -28,13 +28,13 @@ class PersonRow extends React.Component {
         let person = this.props.person
 
 
-        Object.keys(person).map(key => {
+        Object.keys(person).map((key, index) => {
                 if((key !== 'name') && PersonActions.checkRole(PersonActions.getRoles(), key)){
                     let icon
                     if(person[key]){
-                        icon = <Col md={2}><i className="mdi-action-done"></i></Col>
+                        icon = <Col key={person['name']+index} md={2}><i className="mdi-action-done"></i></Col>
                     } else {
-                        icon = <Col md={2}><i className="mdi-content-clear"></i></Col>
+                        icon = <Col key={person['name']+index} md={2}><i className="mdi-content-clear"></i></Col>
                     }
 
                     icons.push(
@@ -53,10 +53,8 @@ class PersonRow extends React.Component {
         let buttonMargin = {
             margin: '0'
         }
-        console.log(person)
-        let checkboxes = this.renderCheckboxes(true)
+        let checkboxes = this.renderCheckboxes()
 
-        console.log(this.props.filter)
         return (
               <Panel style={panelStyle}>
               <Row>

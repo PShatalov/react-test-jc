@@ -15,8 +15,8 @@ class PersonTable extends React.Component {
         let panelHeader = <Row style={{padding: '10px'}}>
             <Col md={2}>Name</Col>
             {
-                this.state.roles.map(role => (
-                    <Col md={2}>{role.title}</Col>
+                this.state.roles.map((role, index) => (
+                    <Col key={role.title+index} md={2}>{role.title}</Col>
                 ))
             }
             <Col md={3}>Delete</Col>
@@ -25,7 +25,7 @@ class PersonTable extends React.Component {
             <Panel bsStyle={'primary'} header={panelHeader}>
                 {
                     this.props.persons.map((person, index) => (
-                        <PersonRow index={index} {...this.props} person={person} />
+                        <PersonRow key={person['title']} index={index} {...this.props} person={person} />
                     ))
                 }
                 <Row style={{padding: '10px'}}>

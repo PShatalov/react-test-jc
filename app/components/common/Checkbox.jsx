@@ -1,8 +1,9 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 class Checkbox extends React.Component {
     getInputDOMNode() {
-        return this.refs.input.getDOMNode();
+        return ReactDOM.findDOMNode(this.refs.input);
     }
     getChecked() {
         return this.getInputDOMNode().checked;
@@ -23,7 +24,7 @@ class Checkbox extends React.Component {
     renderInput(){
         return [
             <input {...this.props} type="checkbox" name={this.props.name} ref="input" key="input" />,
-            <span className="checkbox-material">
+            <span key={'checkbox'+this.props.name} className="checkbox-material">
                 <span className="ripple" />
                 <span className="check" />
             </span>

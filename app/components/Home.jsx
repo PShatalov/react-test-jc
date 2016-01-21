@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Input, Button, Panel, Row, Col} from 'react-bootstrap'
 import Checkbox from './common/Checkbox.jsx'
 import PersonActions from '../actions/PersonActions.js'
@@ -28,9 +29,6 @@ class Home extends React.Component {
     }
     storeChange() {
         let appliedfilter = PersonStore.getState().appliedFilter
-        //console.log(PersonStore.getState())
-        //let filtered = PersonActions.filteredPersons(this.state.persons, appliedfilter)
-        //console.log(filtered)
         if(!appliedfilter){
             this.refs[this.state.appliedFilter].setChecked(false)
         } else {
@@ -48,10 +46,7 @@ class Home extends React.Component {
     }
     addPerson(){
         let formData = {
-            name: this.refs.name.getValue(),
-            //superpower: this.refs.superpower.getChecked(),
-            //genius: this.refs.genius.getChecked(),
-            //rich: this.refs.rich.getChecked()
+            name: this.refs.name.getValue()
         }
         this.state.roles.map(role => (
             formData[role.key] = this.refs[role.key].getChecked()
@@ -66,13 +61,11 @@ class Home extends React.Component {
     removePerson(index){
 
         let persons = this.state.persons
-        //console.log('here', persons)
         persons.splice(index, 1)
         this.setState({
             persons: persons
         })
         PersonActions.addPerson(persons)
-        //console.log(persons)
     }
     render() {
         let contentPanel = {
@@ -89,14 +82,9 @@ class Home extends React.Component {
         let inputWidth = {
             width: '100%'
         }
-        //console.log(this.state.appliedFilter)
-        //if(this.state.appliedFilter){
-        //   let persons = PersonActions.filteredPersons(this.state.persons, this.state.appliedFilter)
-        //    console.log(persons)
-        //}
 
         return (
-            <div className="container">
+            <div className="container" key="home">
             <Row>
                 <Col md={8}>
                     <Panel style={contentPanel}>
@@ -107,9 +95,9 @@ class Home extends React.Component {
                             </Col>
                             <Col md={6}>
                                 <Row>
-                                    {this.state.roles.map(role => (
-                                        <Col md={role.md} style={{padding: '0'}}>
-                                            <Checkbox key={role.key} label={role.title} ref={role.key} />
+                                    {this.state.roles.map((role,index) => (
+                                        <Col key={index} md={role.md} style={{padding: '0'}}>
+                                            <Checkbox key={role.key} name={role.key} label={role.title} ref={role.key} />
                                         </Col>
                                     ))}
                                 </Row>
@@ -135,8 +123,8 @@ class Home extends React.Component {
                     <Panel style={sidebarPanel}>
                         <h2>{'Total Persons: '+this.state.persons.length}</h2>
                         {
-                            this.state.roles.map(role => (
-                                <h4>{role.title+': '+PersonActions.getTypeCount(this.state.persons, role.key)}</h4>
+                            this.state.roles.map((role, index) => (
+                                <h4 key={index}>{role.title+': '+PersonActions.getTypeCount(this.state.persons, role.key)}</h4>
                             ))
                         }
                     </Panel>
